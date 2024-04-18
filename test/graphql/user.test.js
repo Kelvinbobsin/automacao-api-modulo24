@@ -1,10 +1,31 @@
+// test.js
 const { spec } = require('pactum');
 const { eachLike, like } = require('pactum-matchers');
+
+let token;
+beforeEach(async () => {
+    token = await spec()
+        .post('http://lojaebac.ebaconline.art.br/graphql')
+        .withGraphQLQuery(`
+        mutation AuthUser($email: String, $password: String) {
+            authUser(email: $email, password: $password) {
+              success
+              token
+            }
+          }
+    `)
+        .withGraphQLVariables({
+            "email": "admin@admin.com",
+            "password": "admin123"
+        })
+        .returns('data.authUser.token')
+
+})
 
 it('listagem de usuarios', async () => {
     await spec()
         .post('http://lojaebac.ebaconline.art.br/graphql')
-        //.withHeaders("Authorization", token)
+        .withHeaders("Authorization", token)
         .withGraphQLQuery(`
         query {
             Users {
