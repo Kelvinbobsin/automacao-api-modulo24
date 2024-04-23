@@ -1,19 +1,30 @@
 {
-  "name": "teste-com-graphql",
+  "name": "API Test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test/**/*.test.js"
-  },
+    "test:api": "jest",
+    "test:supertest": "supertest --reporter dot tests/api/*.spec.js",
+    "test": "npm run test:api && npm run test:supertest",
+  "ci": "start-server-and-test start-server http://localhost:3000/workflow test"
+},
   "keywords": [],
-  "author": "",
+  "author": "TioKelvin",
   "license": "ISC",
   "devDependencies": {
     "mocha": "^10.4.0",
     "pactum": "^3.6.7"
   },
   "dependencies": {
-    "pactum-matchers": "^1.1.7"
+    "pactum-matchers": "^1.1.7",
+    "@types/jest": "^27.4.1",
+    "dotenv": "^16.0.0",
+    "jest": "^27.5.1",
+    "jest-html-reporters": "^3.0.6",
+    "supertest": "^6.2.2",
+    "start-server-and-test": "^2.0.3",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0"
   }
 }
